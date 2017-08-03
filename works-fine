@@ -1,11 +1,11 @@
-players = ["x", "o"]
+players = []
 player_in_game = ["_"]
 game = ["_" for i in range(9)]
 question = "yes", "no"
 answer = ""
 
 def tic_tac_toe():
-    global game, player_in_game, answer
+    global game, player_in_game, answer, players
 
     def welcome():
         if step == 0:
@@ -16,6 +16,20 @@ def tic_tac_toe():
         print game[0:3]
         print game[3:6]
         print game[6:9]
+        
+    def starting_player():
+        if step==0:
+            del players[:]
+            first = raw_input("\nWho starts? (x or o)\n")
+            if first=="x":
+                players.append("x")
+                players.append("o")
+            elif first=="o":
+                players.append("o")
+                players.append("x")
+            else:
+                print "\nThere's no such player.\n"
+                starting_player()
         
     def who_plays():
         if (step % 2) == 0:
@@ -99,6 +113,8 @@ def tic_tac_toe():
         welcome()
         print "\nstep:", step, "\n"
         board()
+        starting_player()
+        print players
         who_plays()
         line_column()
         is_winner()
